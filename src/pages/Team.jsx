@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Linkedin, Mail, Phone } from "lucide-react";
-import {Layout} from "../components/layout/Layout.jsx"
+import { Layout } from "../components/layout/Layout.jsx";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -82,6 +82,8 @@ const conveners = [
   },
 ];
 
+/* ================= TEAM CARD ================= */
+
 const TeamCard = ({ member, index }) => {
   const cardRef = useRef(null);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -116,119 +118,80 @@ const TeamCard = ({ member, index }) => {
     );
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, [index]);
-
-  const handleCardClick = () => {
-    setIsFlipped(!isFlipped);
-  };
 
   return (
     <div
       ref={cardRef}
       className="h-[420px] cursor-pointer"
       style={{ perspective: "1200px" }}
-      onClick={handleCardClick}
+      onClick={() => setIsFlipped(!isFlipped)}
     >
       <div
         className="relative w-full h-full hover:scale-[1.03]"
         style={{
           transformStyle: "preserve-3d",
           transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
-          transition: "transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1)",
+          transition: "transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
-        {/* Front Side */}
+        {/* Front */}
         <div
           className="absolute w-full h-full bg-card rounded-2xl overflow-hidden shadow-lg"
-          style={{
-            backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden",
-          }}
+          style={{ backfaceVisibility: "hidden" }}
         >
-          {/* Avatar */}
           <div className="relative h-48 bg-gradient-to-br from-primary to-accent flex items-center justify-center">
             <div className="w-24 h-24 rounded-full bg-primary-foreground/20 flex items-center justify-center text-primary-foreground text-3xl font-bold">
-              {member.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")}
+              {member.name.split(" ").map((n) => n[0]).join("")}
             </div>
-            <div className="absolute top-4 right-4">
-              <span className="px-3 py-1 bg-primary-foreground/20 rounded-full text-xs text-primary-foreground font-medium">
-                {member.role}
-              </span>
-            </div>
+            <span className="absolute top-4 right-4 px-3 py-1 bg-primary-foreground/20 rounded-full text-xs text-primary-foreground">
+              {member.role}
+            </span>
           </div>
 
-          {/* Info */}
           <div className="p-5">
-            <h3 className="font-bold text-lg text-foreground">{member.name}</h3>
-            <p className="text-accent text-sm font-medium">{member.branch}</p>
-            <p className="text-muted-foreground text-sm mb-6">{member.year}</p>
-
-            <div className="mt-10 text-center">
-              <p className="text-sm text-accent font-medium">
-                Click to see details
-              </p>
-            </div>
+            <h3 className="font-bold text-lg">{member.name}</h3>
+            <p className="text-accent text-sm">{member.branch}</p>
+            <p className="text-muted-foreground text-sm">{member.year}</p>
+            <p className="mt-10 text-center text-sm text-accent">
+              Click to see details
+            </p>
           </div>
         </div>
 
-        {/* Back Side */}
-<div
-  className="
-    absolute w-full h-full bg-card rounded-2xl overflow-hidden
-    p-6 flex flex-col justify-center
-    shadow-[0_26px_60px_rgba(37,99,235,0.45)]
-  "
-  style={{
-    backfaceVisibility: "hidden",
-    WebkitBackfaceVisibility: "hidden",
-    transform: "rotateY(180deg)",
-  }}
->
-
-
-          <h3 className="font-bold text-xl text-foreground text-center mb-8">
+        {/* Back */}
+        <div
+          className="absolute w-full h-full bg-card rounded-2xl p-6 flex flex-col justify-center"
+          style={{
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+          }}
+        >
+          <h3 className="font-bold text-xl text-center mb-6">
             {member.name}
           </h3>
 
           <div className="space-y-4 text-sm">
-            <a
-              href={`mailto:${member.email}`}
-              className="flex items-center gap-3 text-muted-foreground hover:text-accent transition-colors"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Mail className="w-5 h-5 flex-shrink-0" />
-              <span className="truncate">{member.email}</span>
+            <a href={`mailto:${member.email}`} className="flex gap-3">
+              <Mail className="w-5 h-5" /> {member.email}
             </a>
-            <a
-              href={`tel:${member.phone}`}
-              className="flex items-center gap-3 text-muted-foreground hover:text-accent transition-colors"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Phone className="w-5 h-5 flex-shrink-0" />
-              <span>{member.phone}</span>
+            <a href={`tel:${member.phone}`} className="flex gap-3">
+              <Phone className="w-5 h-5" /> {member.phone}
             </a>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-border">
+          <div className="mt-6 pt-4 border-t">
             <a
               href={member.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-accent hover:text-primary transition-colors font-medium"
-              onClick={(e) => e.stopPropagation()}
+              className="flex gap-2 text-accent"
             >
               <Linkedin className="w-5 h-5" />
               Connect on LinkedIn
             </a>
-          </div>
-
-          <div className="mt-6 text-center">
-            <p className="text-xs text-muted-foreground">Click to flip back</p>
           </div>
         </div>
       </div>
@@ -236,7 +199,11 @@ const TeamCard = ({ member, index }) => {
   );
 };
 
+/* ================= TEAM PAGE ================= */
+
 const Team = () => {
+  const [activeTab, setActiveTab] = useState("current");
+
   return (
     <Layout>
       {/* Hero */}
@@ -256,28 +223,56 @@ const Team = () => {
         </div>
       </section>
 
-      {/* Team Grid */}
-      <section className="py-16 lg:py-24 bg-background">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <p className="text-accent text-sm font-semibold uppercase tracking-wider mb-2">
-              Student Leaders
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              Placement Conveners 2024-25
-            </h2>
-          </motion.div>
+      {/* Content */}
+      <section className="py-16 bg-background">
+        <div className="container mx-auto">
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {conveners.map((member, index) => (
-              <TeamCard key={index} member={member} index={index} />
-            ))}
+          {/* TOGGLE BUTTONS */}
+          <div className="flex justify-center gap-4 mb-12">
+            <button
+              onClick={() => setActiveTab("current")}
+              className={`px-6 py-2 rounded-md border ${
+                activeTab === "current"
+                  ? "bg-blue-900 text-white"
+                  : "bg-background text-muted-foreground"
+              }`}
+            >
+              Current Conveners
+            </button>
+
+            <button
+              onClick={() => setActiveTab("past")}
+              className={`px-6 py-2 rounded-md border ${
+                activeTab === "past"
+                  ? "bg-blue-900 text-white"
+                  : "bg-background text-muted-foreground"
+              }`}
+            >
+              Past Conveners
+            </button>
           </div>
+
+          {/* CURRENT */}
+          {activeTab === "current" && (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {conveners.map((m, i) => (
+                <TeamCard key={i} member={m} index={i} />
+              ))}
+            </div>
+          )}
+
+          {/* PAST (PLACEHOLDER) */}
+          {activeTab === "past" && (
+            <div className="text-center py-24 text-muted-foreground">
+              <h2 className="text-2xl font-semibold mb-2">
+                Past Conveners Section
+              </h2>
+              <p>
+                Paste the past conveners code from <b>main</b> branch here.
+              </p>
+            </div>
+          )}
+
         </div>
       </section>
     </Layout>
