@@ -50,60 +50,63 @@ export const MessageSection = () => {
   };
 
   return (
-    <section ref={ref} className="py-20 bg-secondary">
-      <div className="container mx-auto px-4 lg:px-8">
+  <section ref={ref} className="py-12 md:py-20 bg-secondary overflow-hidden">
+    <div className="container mx-auto px-4 lg:px-8">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        className="text-center mb-12 md:mb-16"
+      >
+        <p className="text-accent text-sm md:text-lg font-bold uppercase tracking-wider mb-2">Leadership</p>
+        <h2 className="text-2xl md:text-4xl font-bold text-blue-950">Messages from Leadership</h2>
+      </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          className="text-center mb-16"
-        >
-          <p className="text-accent text-lg font-bold uppercase tracking-wider mb-2">Leadership</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-blue-950">Messages from Leadership</h2>
-        </motion.div>
-
-        {/* DIRECTOR CARD */}
-        <div className="flex justify-center mb-12">
-          {messages.slice(0, 1).map((item, i) => (
-            <motion.div key={i} {...cardProps} style={{ width: item.width }}
-              className="bg-card rounded-2xl p-8 relative border border-border 
-              shadow-[0_-4px_10px_rgba(0,0,0,0.12),0_25px_45px_-12px_rgba(0,0,0,0.35)]
-              hover:shadow-[0_-8px_18px_rgba(0,0,0,0.18),0_35px_50px_-12px_rgba(0,0,0,0.45)]"
-            >
-              <Quote className="absolute top-6 right-6 w-12 h-12 text-primary/10" />
-              <div className="flex items-center gap-4 mb-6">
-                <img src={item.image} className="w-24 h-24 rounded-full object-cover border-4 border-primary/20" />
-                <div>
-                  <h3 className="font-bold text-lg text-foreground">{item.name}</h3>
-                  <p className="text-sm text-accent">{item.role}</p>
-                </div>
+      {/* DIRECTOR CARD - Full width on mobile, max-width on desktop */}
+      <div className="flex justify-center mb-8">
+        {messages.slice(0, 1).map((item, i) => (
+          <motion.div 
+            key={i} 
+            {...cardProps} 
+            className="bg-card rounded-2xl p-6 md:p-8 relative border border-border w-full max-w-[1100px]
+                       shadow-lg hover:shadow-xl transition-all"
+          >
+            <Quote className="absolute top-4 right-4 md:top-6 md:right-6 w-8 h-8 md:w-12 md:h-12 text-primary/10" />
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 mb-6 text-center md:text-left">
+              <img src={item.image} className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-4 border-primary/20" />
+              <div>
+                <h3 className="font-bold text-lg text-foreground">{item.name}</h3>
+                <p className="text-sm text-accent">{item.role}</p>
               </div>
-              <p className="text-muted-foreground italic leading-relaxed">"{item.message}"</p>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* 2 HALF CARDS BELOW */}
-        <div className="flex justify-center gap-8">
-          {messages.slice(1, 3).map((item, i) => (
-            <motion.div key={i} {...cardProps} style={{ width: item.width }}
-              className="bg-card rounded-2xl p-8 relative border border-border
-              shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)]
-              hover:shadow-[0_18px_40px_-8px_rgba(0,0,0,0.4)]"
-            >
-              <Quote className="absolute top-6 right-6 w-10 h-10 text-primary/10" />
-              <div className="flex items-center gap-4 h-[100px]">
-                <img src={item.image} className="w-24 h-24 rounded-full object-cover border-4 border-primary/20" />
-                <div>
-                  <h3 className="font-bold text-lg text-foreground">{item.name}</h3>
-                  <p className="text-sm text-accent">{item.role}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
+            </div>
+            <p className="text-muted-foreground italic leading-relaxed text-sm md:text-base text-justify md:text-left">
+              "{item.message}"
+            </p>
+          </motion.div>
+        ))}
       </div>
-    </section>
-  );
+
+      {/* 2 HALF CARDS - Stacked on mobile, side-by-side on desktop */}
+      <div className="flex flex-col md:flex-row justify-center gap-6 md:gap-8 max-w-[1100px] mx-auto">
+        {messages.slice(1, 3).map((item, i) => (
+          <motion.div 
+            key={i} 
+            {...cardProps} 
+            className="bg-card rounded-2xl p-6 md:p-8 relative border border-border flex-1
+                       shadow-md hover:shadow-lg transition-all"
+          >
+            <Quote className="absolute top-4 right-4 w-8 h-8 text-primary/10" />
+            <div className="flex items-center gap-4">
+              <img src={item.image} className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-4 border-primary/20 flex-shrink-0" />
+              <div className="min-w-0">
+                <h3 className="font-bold text-md md:text-lg text-foreground truncate">{item.name}</h3>
+                <p className="text-xs md:text-sm text-accent line-clamp-2">{item.role}</p>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
 };
