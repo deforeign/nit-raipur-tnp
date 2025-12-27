@@ -24,15 +24,20 @@ export const Navbar = () => {
       <nav className="container mx-auto px-2 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-14 h-14 rounded-full flex items-center justify-center shadow-elegant group-hover:shadow-glow transition-shadow duration-300">
-              <img src={nitrlogo} className="w-12 h-12 text-primary-foreground" />
-            </div>
-            <div className="hidden sm:block">
-              <p className="font-bold text-lg text-primary leading-tight">Training & Placement Cell</p>
-              <p className="text-xs text-muted-foreground">National Institute Of Technology , Raipur</p>
-            </div>
-          </Link>
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 group min-w-0">
+  <div className="flex-shrink-0 w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-elegant group-hover:shadow-glow transition-shadow duration-300">
+    <img src={nitrlogo} className="w-8 h-8 sm:w-12 sm:h-12 object-contain" />
+  </div>
+  
+  <div className="flex flex-col items-start min-w-0">
+    <p className="font-bold text-xs sm:text-lg text-primary leading-tight truncate max-w-full">
+      Training & Placement Cell
+    </p>
+    <p className="text-[9px] sm:text-xs text-muted-foreground truncate max-w-[180px] xs:max-w-full">
+      NIT Raipur
+    </p>
+  </div>
+</Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">

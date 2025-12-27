@@ -115,7 +115,11 @@
   * {
     @apply border-border;
   }
-
+  
+  body, html {
+  overflow-x: hidden;
+  width: 100%;
+}
   html {
     scroll-behavior: smooth;
   }
