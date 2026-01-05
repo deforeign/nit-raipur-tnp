@@ -14,6 +14,7 @@ import ForRecruiters from "./pages/ForRecruiters.jsx";
 import Team from "./pages/Team.jsx";
 import Contact from "./pages/Contact.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import Developer from "./pages/Developer.jsx";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/team" element={<Team />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/developer" element={<Developer />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
