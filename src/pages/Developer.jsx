@@ -190,9 +190,9 @@ const DeveloperCard = ({ member, index }) => {
 
           <div className="space-y-4 text-sm">
             <a href={`mailto:${member.email}`} className="flex gap-3">
-              <Mail className="w-5 h-5" />
-              {member.email}
-            </a>
+  <Mail className="w-5 h-5 shrink-0" />
+  <span className="break-all">{member.email}</span>
+</a>
 
             <a href={`tel:${member.contact}`} className="flex gap-3">
               <Phone className="w-5 h-5" />
